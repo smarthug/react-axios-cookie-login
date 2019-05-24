@@ -1,26 +1,52 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import LoginRegister  from 'react-mui-login-register';
+import Axios from 'axios';
+
+//import './App.css';
 
 function App() {
+
+  const handleLogin = content => {
+    alert(`Logging in with content '${JSON.stringify(content)}'`);
+    login(content);
+  };
+
+  const handleLoginWithProvider = providerId => {
+    alert(`Logging in with provider '${providerId}'`);
+  };
+
+  const handleRegister = content => {
+    alert(`Registering with content '${JSON.stringify(content)}'`);
+  };
+
+  const handleRegisterWithProvider = providerId => {
+    alert(`Registering with provider '${providerId}'`);
+  };
+
+  const login = async (content) => {
+    await Axios.post('http://127.0.0.1:8000/auth/token/login/' , content).then(
+      (response)=>{
+        console.log(response)
+      }
+    ).catch((error)=>{
+      console.log(error)
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <LoginRegister 
+                         onLogin={handleLogin}
+                         onLoginWithProvider={handleLoginWithProvider}
+                         onRegister={handleRegister}
+                         onRegisterWithProvider={handleRegisterWithProvider}
+          />
     </div>
   );
+
+
+
 }
 
 export default App;
